@@ -1,7 +1,8 @@
 var fs = require("fs");
 const data = require("./data/eosAccounts.json");
-
+const nameFactorsList = require("./factors/factorList.json");
 const parsedNames = [];
+const minEosLimit = 1.33;
 
 const writeJSONFile = dataArr => {
   const stringDataArr = JSON.strigify(dataArr);
@@ -14,25 +15,44 @@ const writeJSONFile = dataArr => {
   });
 };
 
-const parseEOSaccountName = account => {
+const getNameRelevance = (acctName, factorList) => {
+  let relevanceBool = false;
+  for (let k = 0; k < factorList.length; k++) {
+    const factorStringPos = acctName.search(factorList[k].factor);
+    const isNameRelevant = factorStringPos > -1;
+    if (isNameRelevant) {
+      relevanceBool = true;
+      console.log("factorStringPos", factorStringPos);
+      console.log("factorList[k]", factorList[k]);
+      break;
+    }
+  }
+  return relevanceBool;
+};
+
+const getTotalBool = (eos, limit) => {
+  const totalInt = parseInt(eos);
+  const totalFloat = parseFloat(eos);
+  const totalInAcct = totalInt > totalFloat ? totalInt : totalFloat;
+  console.log("totalInAcct", totalInAcct);
+  return totalInAcct > limit;
+};
+
+const checkAcctRelevance = account => {
   const { account_name, total_eos } = account;
-  const totalInt = parseInt(total_eos);
-  const totalFloat = parseFloat(total_eos);
-  // console.log("account.account_name", account_name);
-  console.log("total", totalInt);
-  console.log("type", totalFloat);
-  let total = totalInt > totalFloat ? totalInt : totalFloat;
-  if (total > 0.1) {
+  // if (getTotalBool(total_eos, minEosLimit)) {
+  //   console.log("total_eos", account);
+  //   return true;
+  // }
+  if (getNameRelevance(account_name, nameFactorsList)) {
+    console.log("account_name", account_name);
     return true;
   }
 };
 
-for (i = 0; i < 3; i++) {
+for (let i = 0; i < 100; i++) {
   let account = data[i];
-  let bool = parseEOSaccountName(account);
-  if (bool) {
+  if (checkAcctRelevance(account)) {
     parsedNames.push(account.account_name);
   }
 }
-
-console.log("parsedNames", parsedNames);

@@ -13,12 +13,16 @@ const getSynonyms = word => {
           listArr.push(word.toLowerCase());
         }
       }
-      fs.writeFile(`${word}.json`, JSON.stringify(listArr), err => {
-        // throws an error, you could also catch it here
-        if (err) throw err;
-        // success case, the file was saved
-        console.log("word list saved!");
-      });
+      fs.writeFile(
+        `./factors/data/${word}.json`,
+        JSON.stringify(listArr),
+        err => {
+          // throws an error, you could also catch it here
+          if (err) throw err;
+          // success case, the file was saved
+          console.log("word list saved!");
+        }
+      );
     })
     .catch(function(error) {
       console.log(error);

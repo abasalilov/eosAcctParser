@@ -1,0 +1,53 @@
+[
+  {
+    "factor": "gezt"
+  },
+  {
+    "factor": "eosio.bpay"
+  },
+  {
+    "factor": "eosio.msig"
+  },
+  {
+    "factor": "eosio.names"
+  },
+  {
+    "factor": "eosio.ram"
+  },
+  {
+    "factor": "eosio.ramfee"
+  },
+  {
+    "factor": "eosio.saving"
+  },
+  {
+    "factor": "eosio.stake"
+  },
+  {
+    "factor": "eosio.token"
+  },
+  {
+    "factor": "eosio.unregd"
+  },
+  {
+    "factor": "eosio.vpay"
+  },
+  {
+    "factor": "ramfee"
+  },
+  {
+    "factor": "saving"
+  },
+  {
+    "factor": "stake"
+  },
+  {
+    "factor": "token"
+  },
+  {
+    "factor": "unregd"
+  },
+  {
+    "factor": "vpay"
+  }
+]

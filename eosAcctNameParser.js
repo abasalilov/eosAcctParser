@@ -3,7 +3,7 @@ const data = require("./data/eosAccounts.json");
 const nameFactorsList = require("./factors/factorList.json");
 const nogoListArr = require("./factors/nogoList.json");
 const confirmedAirDropAccts = [];
-const minEosLimit = 1.2;
+const minEosLimit = 1;
 let level1 = 0;
 let level10 = 0;
 let level20 = 0;
@@ -101,7 +101,7 @@ const one = {
   total_eos: "60.0000"
 };
 
-for (let i = 0; i < 100000; i++) {
+for (let i = 0; i < data.length; i++) {
   const masterScore = checkAcctRelevance(data[i]);
   if (masterScore) {
     confirmedAirDropAccts.push(masterScore);
@@ -141,11 +141,27 @@ const doubleCheckedArr = data => {
       checked.push(data[l]);
     }
   }
+  const totalAccts = level1 + level10 + level20;
+
+  console.log("level1", level1);
+  console.log("level10", level10);
+  console.log("level20", level20);
+  console.log("total # of accts", totalAccts);
+  const one = level1 * 1000;
+  const ten = level10 * 1000 * 3;
+  const twenty = level20 * 1000 * 5.45;
+  const totalToDistribute = one + ten + twenty;
+  console.log("level1 - total", one);
+  console.log("level10 - total", ten);
+  console.log("level20 - total", twenty);
+  console.log("total distributed", totalToDistribute);
+  console.log("% of 1,000,000,000", totalToDistribute / 1000000000);
   return checked;
 };
 
-const onetwo = doubleCheckedArr(confirmedAirDropAccts);
-fs.writeFile("filteredEOSAddresses.json", JSON.stringify(onetwo), err => {
+const finalArr = doubleCheckedArr(confirmedAirDropAccts);
+
+fs.writeFile("filteredEOSAddresses.json", JSON.stringify(finalArr), err => {
   // throws an error, you could also catch it here
   if (err) throw err;
 
